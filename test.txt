@@ -3,3 +3,4 @@ test
 =======
 Das ist der zweite Test
 >>>>>>> b9bfdaccb4934d194d1b05cc587f113897fa315f
+Das geht ja sogar
