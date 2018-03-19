@@ -8,17 +8,19 @@ from TimeDifference import TimeDifference
 
 class TestTimeDifference(unittest.TestCase):
 
-    def test_tbd(self):
+    def test_timedifference_in_microseconds1(self):
         td = TimeDifference()
-        dt1 = datetime.now()
-        time.sleep(5)
-        dt2 = datetime.now()
-        td.calculate(dt1, dt2)
-        self.assertEqual(True, True)
+        dt1 = datetime(2018, 3, 19, 11, 0, 0, 0)
+        dt2 = datetime(2018, 3, 19, 11, 0, 0, 100)
+        timediff = td.calculate(dt1, dt2)
+        self.assertEqual(timediff.microseconds, 100)
 
-    def test_isupper(self):
-        self.assertTrue('FOO'.isupper())
-        self.assertFalse('Foo'.isupper())
+    def test_timedifference_in_microseconds2(self):
+        td = TimeDifference()
+        dt1 = datetime(2018, 3, 19, 11, 0, 0, 0)
+        dt2 = datetime(2018, 3, 19, 11, 0, 0, 0)
+        timediff = td.calculate(dt1, dt2)
+        self.assertEqual(timediff.microseconds, 0)
 
     def test_split(self):
         s = 'hello world'
