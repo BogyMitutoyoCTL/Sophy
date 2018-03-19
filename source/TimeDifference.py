@@ -1,10 +1,17 @@
-import time
+
+"""
+Calculate time difference from two times
+"""
+from datetime import datetime
+from datetime import timedelta
+
 
 class TimeDifference:
     def __init__(self):
-        self.description = "Calculate time difference from two times"
+        pass
 
-    def calculate(self, firstTime, secondTime):
-        datetime t1 = firstTime
-        datetime t2 = secondTime
+    def calculate(self, time1: datetime, time2: datetime) -> timedelta:
+        return time2 - time1
+
+
 
