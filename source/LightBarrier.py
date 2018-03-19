@@ -2,8 +2,7 @@ import time
 import RPi.GPIO as GPIO
 
 
-
-GPIO.setmode(GPIO.BCM)
+GPIO.setmode(GPIO.BCM)      #PIN_MAPPING
 
 
 

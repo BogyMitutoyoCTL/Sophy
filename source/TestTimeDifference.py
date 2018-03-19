@@ -12,6 +12,7 @@ class TestTimeDifference(unittest.TestCase):
         dt1 = datetime(2018, 3, 19, 11, 0, 0, 0)
         dt2 = datetime(2018, 3, 19, 11, 0, 0, 100)
         timediff = td.calculate(dt1, dt2)
+        print(timediff.microseconds)
         self.assertEqual(timediff.microseconds, 100)
 
     def test_timedifference_calculate_diff_in_microseconds2(self):
