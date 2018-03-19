@@ -2,7 +2,16 @@
 
 import unittest
 from datetime import datetime
+from NameInput import MyApp
 from TimeDifference import TimeDifference
+
+"""""
+class NameInput(unittest.TestCase):
+
+    def test_1(self):
+        MyApp().run()
+        self.assertEqual(True, True)
+"""""
 
 
 class TestTimeDifference(unittest.TestCase):
