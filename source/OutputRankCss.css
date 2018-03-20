@@ -1,0 +1,16 @@
+body {
+
+
+}
+
+h1 {
+    color: #FF0000;
+    margin-left: 700px;
+    font-size: 100px;
+}
+li {
+    color: green;
+    font-style: normal;
+    font-size: 100px;
+    margin-left: 800px;
+}
