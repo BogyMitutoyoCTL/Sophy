@@ -3,49 +3,32 @@ Um die Werte für die Distanz, den Timeout und die Listeneinträge auszulesen od
 wurde eine Klasse erstellt, welche dies unter Hinzugabe von der entsprechenden Kategorie tut.
 """
 
-from tkinter import simpledialog as sdl
-from tkinter import *
-
-root = Tk()
-root.withdraw()
 
 class Persistence:
-    def __init__(self, what_to_do):
+    def __init__(self, which_data):
         self.value = 0
-        self.filePath = '../values/{}.md'.format(what_to_do)
-        self.fileName = what_to_do
-
-    def get_value(self):
+        self.filePath = '../values/{}.md'.format(which_data)
+        self.fileName = which_data
         try:
-
             with open(self.filePath, 'r') as file:
-                self.value = file.read()
-                try:
-                    self.value = int(self.value)
-                except:
-                    self.value = 0
+                file_content = file.read()
+                self.set_value(file_content)
+        except: self.save_to_file("0")
+
+    def set_value(self, value):
+        try:
+            self.value = int(value)
         except:
-            self.input_and_save()
+            self.value=0
 
-        if self.value <= 0:
-            self.input_and_save()
+    def input_required(self):
+        return self.value<=0
 
-        return self.value
-
-    def input_and_save(self):
-
-        input = sdl.askinteger("WAS", self.fileName)
+    def save_to_file(self, input: str) -> bool:
+        self.set_value(input)
         try:
             with open(self.filePath, 'w') as file:
-                file.write(str(input))
-            self.value = input
+                file.write(str(self.value))
+            return True
         except:
-            sdl.messagebox.showerror("ERROR", "{} not writeable".format(self.filePath))
-
-distance = Persistence("distance").get_value()
-timeout = Persistence("timeout").get_value()
-entries = Persistence("entries").get_value()
-
-print("Distance: {}".format(distance))
-print("Timeout: {}".format(timeout))
-print("Entries: {}".format(entries))
+            return False

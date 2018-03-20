@@ -2,4 +2,4 @@
 
 **Measurements**
 
-The length of the duration has to be stated in meters.
+The length of the distance has to be stated in millimeters.
