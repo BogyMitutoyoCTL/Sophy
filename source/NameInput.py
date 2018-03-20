@@ -8,9 +8,8 @@ class NameInput(sdl.Dialog):
         # self.e1
 
     def body(self, master):
-        Label(master, text="User Name").grid(row=0)
+        Label(master, text="User Name")
         self.e1 = Entry(master)
-        self.e1.grid(row=0, column=1)
         return self.e1
 
     def apply(self):
@@ -18,3 +17,4 @@ class NameInput(sdl.Dialog):
 
     def getUsername(self):
         return self.__username
+
