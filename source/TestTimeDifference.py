@@ -2,7 +2,6 @@
 
 import unittest
 from datetime import datetime
-from NameInput import MyApp
 from TimeDifference import TimeDifference
 
 """""
