@@ -1,9 +1,10 @@
 import time
 import RPi.GPIO as GPIO
-from TravelDistance import TravelDistance
+
 
 
 GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
 
 
 
@@ -20,11 +21,11 @@ class LightBarrier:
     def intrrupt(self, GPIO_PIN):
         self.time = time.time()
         for i in range(0, len(self.commands)):
-            print("ich informiere jetzt {} über {}".format(self.distances[i], self.commands[i]))
             if  self.commands[i] == "start":
-                 self.distances[i].start(self.time)
-            if self.commands[i] == "stop":
+                self.distances[i].start(self.time)
+            if  self.commands[i] == "stop":
                 self.distances[i].stop(self.time)
+
 
 
 
