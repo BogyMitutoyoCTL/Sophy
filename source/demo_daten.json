@@ -1,0 +1,15 @@
+{
+    "name":"Highscoreliste",
+    "liste": [
+        { "nr": 1, "name":"Hans Dampf", "time":"12,73ms"},
+        { "nr": 2, "name":"Uwe Wannemaker", "time":"13,74ms"},
+        { "nr": 3, "name":"Anke Baumgaertner", "time":"14,13ms"},
+        { "nr": 4, "name":"Monika Diederich", "time":"14,13ms"},
+        { "nr": 5, "name":"Lea Schweizer", "time":"14,13ms"},
+        { "nr": 6, "name":"Maximilian Blau", "time":"14,13ms"},
+        { "nr": 7, "name":"David Zimmer", "time":"14,13ms"},
+        { "nr": 8, "name":"Tanja Austerlitz", "time":"14,13ms"},
+        { "nr": 9, "name":"Sophie Duerr", "time":"14,13ms"},
+        { "nr": 10, "name":"Tim Weiß", "time":"14,13ms"}
+    ]
+}
