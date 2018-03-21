@@ -2,6 +2,8 @@ from datetime import timedelta
 from datetime import date
 from HighScoreEntry import HighScoreEntry
 from beeprint import pp
+import jsonpickle
+from HighScoreSave import *
 
 
 class HighScoreList:
@@ -34,7 +36,6 @@ max_number_of_entries = 3
 max_age = timedelta(days=7)
 ListOfEntry = HighScoreList(max_number_of_entries, max_age)
 
-
 ''' Entries '''
 ListOfEntry.add(HighScoreEntry("Seva", timedelta(seconds=2, milliseconds=450), 44.2, date.today()))
 ListOfEntry.add(HighScoreEntry("Thomas", timedelta(seconds=3, milliseconds=450), 24.3, date(2018, 3, 2)))
@@ -42,5 +43,12 @@ ListOfEntry.add(HighScoreEntry("Paul", timedelta(seconds=5, milliseconds=450), 3
 ListOfEntry.add(HighScoreEntry("Lukas", timedelta(seconds=1, milliseconds=450), 50.3, date(2018, 3, 18)))
 
 
-pp(ListOfEntry)
+a = HighScoreSave().save(ListOfEntry)
+
+if __name__ == '__main__':
+
+    ListOfEntry = HighScoreSave().load()
+
+    pp(ListOfEntry)
+
 
