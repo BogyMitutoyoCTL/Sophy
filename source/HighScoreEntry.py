@@ -23,3 +23,10 @@ class HighScoreEntry:
         self.duration = duration
         self.speed = speed
         self.record_date = record_date
+
+    ''' Functions to sort the entries '''
+    def __lt__(self, other):            #less then
+            return self.duration < other.duration
+
+    def __eq__(self, other):            #equal
+            return self.duration == other.duration
