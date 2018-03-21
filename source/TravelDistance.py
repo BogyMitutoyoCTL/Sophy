@@ -1,18 +1,16 @@
-from LightBarrier import LightBarrier
+import LightBarrier
 from TimeDifference import TimeDifference
-
+import time
+from datetime import datetime
+from datetime import timedelta
 
 class TravelDistance:
-    def __init__(self, pinA: int, pinB: int, distance: int):
+    def __init__(self, distance: int):
         self.difference = 0
         self.speed = 0
-        self.pinA = pinA
-        self.pinB = pinB
         self.distance = distance
-        self.LB1 = LightBarrier(self.pinA).trigger()
-        self.LB2 = LightBarrier(self.pinB).trigger()
-        self.calculate_difference()
-        self.calculate_speed()
+        self.time_start = 0
+        self.time_stop = 0
 
 
     def calculate_speed(self):
@@ -20,9 +18,37 @@ class TravelDistance:
         self.speed = self.speed * 0.0036
 
     def calculate_difference(self):
-        self.difference = TimeDifference().calculate(self.LB1, self.LB2)
+        self.difference = TimeDifference().calculate(self.time_start, self.time_stop)
+
+    def start(self, time):
+        self.time_start = time
+
+
+    def stop(self, time):
+        self.time_stop = time
+        self.calculate_difference()
+        self.calculate_speed()
 
 
 
+if __name__ == '__main__':
+    a = TravelDistance(5)
+    b = TravelDistance(10)
+    c = TravelDistance(15)
+    oben = LightBarrier.LightBarrier(4)
+    oben.i_want_to_be_informed(a, "start")
+    oben.i_want_to_be_informed(c, "start")
+    mitte = LightBarrier.LightBarrier(17)
+    mitte.i_want_to_be_informed(a, "stop")
+    mitte.i_want_to_be_informed(b, "start")
+    unten = LightBarrier.LightBarrier(27)
+    unten.i_want_to_be_informed(b, "stop")
+    unten.i_want_to_be_informed(c, "stop")
 
 
+
+    time.sleep(10)
+
+    print(a.difference)
+    print(b.difference)
+    print(c.difference)
