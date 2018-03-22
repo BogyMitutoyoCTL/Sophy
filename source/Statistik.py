@@ -1,5 +1,6 @@
 from HighScoreEntry import *
 import xlsxwriter
+import time
 
 
 class Statistik:
@@ -11,7 +12,8 @@ class Statistik:
         self.entries.append(entry)
 
     def save_to_file(self):
-        workbook = xlsxwriter.Workbook("../values/statistics.xlsx")
+        t = time.strftime("%Y-%m-%d %H-%M-%S")
+        workbook = xlsxwriter.Workbook("../values/statistics {}.xlsx".format(t))
         worksheet = workbook.add_worksheet()
         worksheet.write(0, 0, "name")
         worksheet.write(0, 1, "speed in km/h")

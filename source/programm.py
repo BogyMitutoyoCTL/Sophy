@@ -1,6 +1,6 @@
 from tkinter import simpledialog as sdl
 
-from CreateHighScoreEntry import *
+from TravelDistance import *
 from Persistence import Persistence
 
 
@@ -22,7 +22,7 @@ if __name__ == '__main__':
 
     oben = LightBarrier.LightBarrier(4)
     mitte = LightBarrier.LightBarrier(17)
-    creator = CreateHighScoreEntry()
+    creator = TravelDistance(100)
 
     oben.i_want_to_be_informed(creator, "start")
     mitte.i_want_to_be_informed(creator, "stop")

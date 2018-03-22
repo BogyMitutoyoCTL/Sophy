@@ -8,11 +8,11 @@ class HighScoreSave:
     def save(self,ListOfEntry):
         list_of_entry_encode = jsonpickle.encode(ListOfEntry)
 
-        with open("../value/HighScoreSave.json", 'w') as file:
+        with open("../values/HighScoreSave.json", 'w') as file:
             file.write(list_of_entry_encode)
 
     def load(self):
-        with open("../value/HighScoreSave.json", 'r') as file:
+        with open("../values/HighScoreSave.json", 'r') as file:
             list_of_entry_decode = file.read()
 
         ListOfEntry = jsonpickle.decode(list_of_entry_decode)
