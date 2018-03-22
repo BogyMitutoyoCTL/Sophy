@@ -20,8 +20,10 @@ Node-RED is a web-based programming tool to easy create data flows while wiring 
 
 ### Here are the steps (for debian stretch) to install mosquitto mqtt server:
 
-First install mosquitto and clients...
+First update and install mosquitto and clients...
 ```bash
+sudo apt update
+sudo apt upgrade
 sudo apt install mosquitto
 sudo apt install mosquitto-clients 
 ```
