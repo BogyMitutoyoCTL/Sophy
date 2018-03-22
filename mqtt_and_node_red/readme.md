@@ -143,6 +143,7 @@ Go to the Node-RED Site and import a flow from the clipboard.
     }
 ]
 ```
+To activate that flow, you have to click at the red DEPLOY Button.
 
 ### Install some mqtt helpers for python
 
@@ -155,6 +156,6 @@ sudo pip3 install paho-mqtt
 
 Try to use the mosquitto_pub command to send data from the console to the mqtt server
 ```bash
-mosquitto_pub -h localhost -t test -m "Hello World!"
+mosquitto_pub -h localhost -t test -m '{"string":"Hello World!"}'
 ```
 Verify if the message is displayed in Node-RED "Debug" window...
