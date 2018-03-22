@@ -58,10 +58,6 @@ Go to your home directory and run the install script:
 cd ~
 bash <(curl -sL https://raw.githubusercontent.com/node-red/raspbian-deb-package/master/resources/update-nodejs-and-nodered)
 ```
-run the update script..
-```bash
-update-nodejs-and-nodered
-```
 make node-red to start always during system boot
 ```bash
 sudo systemctl enable nodered.service
