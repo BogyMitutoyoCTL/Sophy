@@ -4,6 +4,7 @@ import unittest
 from datetime import datetime
 from TimeDifference import TimeDifference
 
+
 """""
 class NameInput(unittest.TestCase):
 
