@@ -66,7 +66,7 @@ sudo systemctl enable nodered.service
 sudo service nodered restart
 ```
 Open the node-red webpage:
-http://127.0.0.1:1883
+http://127.0.0.1:1880
 
 ### Install some mqtt helpers for python
 
