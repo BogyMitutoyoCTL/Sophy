@@ -155,3 +155,4 @@ Try to use the mosquitto_pub command to send data from the console to the mqtt s
 ```bash
 mosquitto_pub -h localhost -t test -m "Hello World!"
 ```
+Verify if the message is displayed in Node-RED "Debug" window...
