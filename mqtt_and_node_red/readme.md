@@ -159,3 +159,34 @@ Try to use the mosquitto_pub command to send data from the console to the mqtt s
 mosquitto_pub -h localhost -t test -m '{"string":"Hello World!"}'
 ```
 Verify if the message is displayed in Node-RED "Debug" window...
+
+### Testprogram to send data with python
+
+we use an editor to write the first python mqtt sender...
+
+```bash
+vi demo_mqtt_publish.py 
+```
+
+```python
+#!/usr/bin/env python3
+import paho.mqtt.client as mqtt
+import time
+
+# Create client instance and connect to localhost
+client = mqtt.Client()
+client.connect("localhost",1883,60)
+
+#data
+json_data = '{"string":"Hello World!"}'
+
+client.publish("test", json_data);
+client.disconnect();
+```
+and go...
+
+```bash
+chmod +x ./demo_mqtt_publish.py
+./demo_mqtt_publish.py 
+```
+
