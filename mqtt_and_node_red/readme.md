@@ -184,7 +184,6 @@ client.publish("test", json_data);
 client.disconnect();
 ```
 and go...
-
 ```bash
 chmod +x ./demo_mqtt_publish.py
 ./demo_mqtt_publish.py 
