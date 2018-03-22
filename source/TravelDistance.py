@@ -21,10 +21,10 @@ class TravelDistance:
         self.difference = TimeDifference().calculate(time_start, time_stop)
         return self.difference
 
-    def start(self, time):
+    def start(self, time:float):
         self.time_start = time
 
-    def stop(self, time):
+    def stop(self, time:float):
         self.time_stop = time
         self.calculate_difference()
         self.calculate_speed()

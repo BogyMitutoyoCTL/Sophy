@@ -7,9 +7,9 @@ class Signal:
         GPIO.setup(self.GPIO_PIN, GPIO.OUT)
 
 
-    def start(self, time):
+    def start(self, time:float):
         GPIO.output(self.GPIO_PIN, GPIO.HIGH)
 
-    def stop(self, time):
+    def stop(self, time:float):
         GPIO.output(self.GPIO_PIN, GPIO.LOW)
 

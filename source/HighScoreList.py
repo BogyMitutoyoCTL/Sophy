@@ -1,5 +1,6 @@
 from datetime import timedelta
 from datetime import date
+from HighScoreEntry import HighScoreEntry
 
 
 class HighScoreList:
@@ -9,7 +10,7 @@ class HighScoreList:
         self.max_count = max_count
         self.max_age = max_age
 
-    def add(self, newEntry):
+    def add(self, newEntry: HighScoreEntry):
 
         self.list.append(newEntry)
 
@@ -25,4 +26,3 @@ class HighScoreList:
         remove_count = len(self.list) - self.max_count
         for t in range(0, remove_count):
             self.list.pop(len(self.list)-1)
-

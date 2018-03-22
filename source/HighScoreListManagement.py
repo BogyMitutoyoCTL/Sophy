@@ -1,16 +1,6 @@
 from HighScoreList import *
 from HighScoreSave import *
 from HighScoreEntry import *
-from CreateHighScoreEntry import *
-
-Today = HighScoreList(3, timedelta(days=1))
-Week = HighScoreList(5, timedelta(days=7))
-Year = HighScoreList(7, timedelta(days=365))
-Month = HighScoreList(5, timedelta(days=30))
-eintrag = HighScoreEntry("Peter", 100)
-eintrag.start(datetime(2018,3,22,13,44,0,0).timestamp())
-eintrag.stop(datetime(2018,3,22,13,44,10,0).timestamp())
-
 
 
 class Management:
@@ -30,13 +20,4 @@ class Management:
             HighScoreSave().save(liste)
 
 
-m = Management()
-m.manage(Today)
-m.manage(Week)
-m.manage(Month)
-m.manage(Year)
-m.zuordnen(eintrag)
-# rutschen
 
-if __name__ == '__main__':
-    m.speichern()

@@ -1,17 +1,11 @@
 import time
 import RPi.GPIO as GPIO
 
-
-
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
-
-
-
 class LightBarrier:
-    def __init__(self, GPIO_PIN):
-        self.time = 0
+    def __init__(self, GPIO_PIN: int):
         self.GPIO_PIN = GPIO_PIN
         self.distances = []
         self.commands = []
@@ -19,15 +13,12 @@ class LightBarrier:
         GPIO.add_event_detect(self.GPIO_PIN, GPIO.RISING, callback= self.intrrupt, bouncetime=200)
 
     def intrrupt(self, GPIO_PIN):
-        self.time = time.time()
+        t = time.time()   #type: float
         for i in range(0, len(self.commands)):
             if  self.commands[i] == "start":
-                self.distances[i].start(self.time)
+                self.distances[i].start(t)
             if  self.commands[i] == "stop":
-                self.distances[i].stop(self.time)
-
-
-
+                self.distances[i].stop(t)
 
     def i_want_to_be_informed(self, distance, command):
         self.distances.append(distance)
