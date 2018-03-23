@@ -227,7 +227,7 @@ chmod +x ./demo_mqtt_publish.py
 ```
 ### Flow in Node-RED to display speeds and highscore list...
 
-```
+```json
 [
     {
         "id": "4f594ac7.c0c694",
