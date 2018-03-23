@@ -21,21 +21,18 @@ def load_value(s:str) -> Persistence:
 
 if __name__ == '__main__':
 
-    timeout = load_value("timeout")
-    entries = load_value("entries")
-    distance = load_value("distance")
 
     s = Statistik()
-    m = Management()
+    management = Management()
     Today = HighScoreList(3, timedelta(days=1))
     Week = HighScoreList(5, timedelta(days=7))
     Year = HighScoreList(7, timedelta(days=365))
     Month = HighScoreList(5, timedelta(days=30))
-    m.manage(Today)
-    m.manage(Week)
-    m.manage(Month)
-    m.manage(Year)
-    m.manage(s)
+    management.manage(Today)
+    management.manage(Week)
+    management.manage(Month)
+    management.manage(Year)
+    management.manage(s)
 
     oben = LightBarrier.LightBarrier(4)
     mitte = LightBarrier.LightBarrier(17)
@@ -46,8 +43,8 @@ if __name__ == '__main__':
     log1 = ConsoleLogger("Es geht")
 
 
-    creator1 = TravelDistance(250,m)
-    creator2 = TravelDistance(125,m)
+    creator1 = TravelDistance(250,management, 5)
+    creator2 = TravelDistance(125,management, 5)
     oben.i_want_to_be_informed(creator1, "start")
     unten.i_want_to_be_informed(creator1, "stop")
     oben.i_want_to_be_informed(rot, "start")
@@ -58,4 +55,4 @@ if __name__ == '__main__':
 
     time.sleep(20)
     s.save_to_file()
-    pp(m.Clients)
+    pp(management.Clients)
