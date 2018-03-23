@@ -253,49 +253,12 @@ chmod +x ./demo_mqtt_publish.py
         "property": "payload",
         "action": "",
         "pretty": false,
-        "x": 420,
-        "y": 779,
+        "x": 337,
+        "y": 714,
         "wires": [
             [
                 "c9edfb8f.0fdfa8",
                 "9ea6a885.9073c8"
-            ]
-        ]
-    },
-    {
-        "id": "7a18cc2b.7837c4",
-        "type": "ui_template",
-        "z": "4f594ac7.c0c694",
-        "group": "d5d137e.fa291c8",
-        "name": "JSON",
-        "order": 0,
-        "width": "0",
-        "height": "0",
-        "format": "<style>{{msg.style}}</style>\n<div id=\"data\">\n    <div id=\"duration\"><span class=\"text\">Duration:</span> <span class=\"value\">{{msg.payload.duration}}s</span></div>\n    <div id=\"average_speed\"><span class=\"text\">Average Speed:</span> <span class=\"value\">{{msg.payload.speed}}km/h</span></div>\n    <div id=\"distance\"><span id=\"text\">Distance:</span> <span id=\"value\">{{msg.payload.distance}}m</span></div>\n</div>",
-        "storeOutMessages": false,
-        "fwdInMessages": true,
-        "templateScope": "local",
-        "x": 818,
-        "y": 767,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "9ea6a885.9073c8",
-        "type": "template",
-        "z": "4f594ac7.c0c694",
-        "name": "css",
-        "field": "style",
-        "fieldType": "msg",
-        "format": "html",
-        "syntax": "mustache",
-        "template": "#data {\n    position:fixed;\n    top: 50%;\n    left: 50%;\n    width:30em;\n    height:18em;\n    margin-top: -9em; /*set to a negative number 1/2 of your height*/\n    margin-left: -15em; /*set to a negative number 1/2 of your width*/\n    border: 3px solid #ccc;\n    background-color: yellow;\n}\n\n#duration {\n    text-color: black\n    text-size: 42px\n}\n\n#average_speed {\n    text-color: black\n    text-size: 42px\n}\n\n#distance {\n    text-color: black\n    text-size: 42px\n}",
-        "x": 646,
-        "y": 775,
-        "wires": [
-            [
-                "7a18cc2b.7837c4"
             ]
         ]
     },
@@ -312,6 +275,76 @@ chmod +x ./demo_mqtt_publish.py
         "x": 793,
         "y": 622,
         "wires": []
+    },
+    {
+        "id": "e1ffa5f9.7c4d98",
+        "type": "ui_toast",
+        "z": "4f594ac7.c0c694",
+        "position": "top left",
+        "displayTime": "5",
+        "highlight": "",
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "topic": "",
+        "name": "New Values",
+        "x": 813,
+        "y": 801,
+        "wires": []
+    },
+    {
+        "id": "7a18cc2b.7837c4",
+        "type": "ui_template",
+        "z": "4f594ac7.c0c694",
+        "group": "d5d137e.fa291c8",
+        "name": "JSON",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "format": "<style>{{msg.style}}</style>\n<div id=\"data\">\n    <div id=\"duration\"><span class=\"text\">Duration:</span> <span class=\"value\">{{msg.payload.duration}}s</span></div>\n    <div id=\"average_speed\"><span class=\"text\">Average Speed:</span> <span class=\"value\">{{msg.payload.speed}}km/h</span></div>\n    <div id=\"distance\"><span class=\"text\">Distance:</span> <span class=\"value\">{{msg.payload.distance}}m</span></div>\n</div>",
+        "storeOutMessages": false,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 781,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9ea6a885.9073c8",
+        "type": "template",
+        "z": "4f594ac7.c0c694",
+        "name": "css",
+        "field": "style",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "#data {\n    position:fixed;\n    top: 50%;\n    left: 50%;\n    width:30em;\n    height:18em;\n    margin-top: -9em; /*set to a negative number 1/2 of your height*/\n    margin-left: -15em; /*set to a negative number 1/2 of your width*/\n    border: 3px solid #ccc;\n    background-color: lightgrey;\n}\n\n#duration {\n    background-color:yellow;\n}\n\n#average_speed {\n    background-color:green;\n}\n\n#distance {\n    text-color:orange;\n}\n\n.text {\n    font-size:44px;\n}\n\n.value {\n    font-size:44px;\n}",
+        "x": 582,
+        "y": 704,
+        "wires": [
+            [
+                "7a18cc2b.7837c4",
+                "b3e9c0f9.8a33f"
+            ]
+        ]
+    },
+    {
+        "id": "b3e9c0f9.8a33f",
+        "type": "function",
+        "z": "4f594ac7.c0c694",
+        "name": "New Values",
+        "func": "msg.payload = \"New Values...\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 640,
+        "y": 805,
+        "wires": [
+            [
+                "e1ffa5f9.7c4d98"
+            ]
+        ]
     },
     {
         "id": "f56708d.defa2f8",
