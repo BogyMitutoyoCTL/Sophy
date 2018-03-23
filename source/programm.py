@@ -1,7 +1,6 @@
 from tkinter import simpledialog as sdl
 import LightBarrier
 from TravelDistance import *
-from Persistence import Persistence
 from Statistik import *
 from HighScoreListManagement import *
 from beeprint import pp
@@ -9,18 +8,9 @@ from Signal import Signal
 from ConsoleLogger import ConsoleLogger
 
 
-def load_value(s:str) -> Persistence:
-    persistence = Persistence(s)
-    if persistence.input_required():
-        eingabe = sdl.askinteger("Enter value", persistence.fileName)
-        save_ok = persistence.save_to_file(eingabe)
-        if not save_ok:
-            sdl.messagebox.showerror("ERROR", "{} not writeable".format(persistence.filePath))
-    return persistence
 
 
 if __name__ == '__main__':
-
 
     s = Statistik()
     management = Management()
@@ -42,9 +32,8 @@ if __name__ == '__main__':
     gelb = Signal(9)
     log1 = ConsoleLogger("Es geht")
 
-
-    creator1 = TravelDistance(250,management, 5)
-    creator2 = TravelDistance(125,management, 5)
+    creator1 = TravelDistance(2000, management, 5)
+    creator2 = TravelDistance(125, management, 5)
     oben.i_want_to_be_informed(creator1, "start")
     unten.i_want_to_be_informed(creator1, "stop")
     oben.i_want_to_be_informed(rot, "start")
@@ -53,6 +42,12 @@ if __name__ == '__main__':
     mitte.i_want_to_be_informed(gruen, "start")
     mitte.i_want_to_be_informed(log1, "start")
 
-    time.sleep(20)
+
+
+
+
+    input("To quit the programm, press \"enter\"")
+
+
     s.save_to_file()
     pp(management.Clients)
