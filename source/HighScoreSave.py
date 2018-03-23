@@ -12,12 +12,13 @@ class HighScoreSave:
             file.write(list_of_entry_encode)
 
     def load(self):
+
         with open("../values/HighScoreSave.json", 'r') as file:
             list_of_entry_decode = file.read()
 
         ListOfEntry = jsonpickle.decode(list_of_entry_decode)
         print("Ich hab geladen")
-
         return ListOfEntry
+
 
 

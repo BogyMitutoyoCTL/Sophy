@@ -13,17 +13,19 @@ from ConsoleLogger import ConsoleLogger
 
 if __name__ == '__main__':
 
-    s = Statistik()
     management = Management()
     Today = HighScoreList(3, timedelta(days=1))
     Week = HighScoreList(5, timedelta(days=7))
     Year = HighScoreList(7, timedelta(days=365))
     Month = HighScoreList(5, timedelta(days=30))
-    management.manage(Today)
-    management.manage(Week)
-    management.manage(Month)
-    management.manage(Year)
-    management.manage(s)
+
+
+    if management.laden() == False:
+
+        management.manage(Today)
+        management.manage(Week)
+        management.manage(Month)
+        management.manage(Year)
 
     oben = LightBarrier.LightBarrier(4)
     mitte = LightBarrier.LightBarrier(17)
@@ -35,8 +37,7 @@ if __name__ == '__main__':
     gelb = Signal(9)
     log1 = ConsoleLogger("Es geht")
 
-    creator1 = TravelDistance(2000, management, 5)
-    creator2 = TravelDistance(125, management, 5)
+    creator1 = TravelDistance(2000, management, False,5)
     oben.i_want_to_be_informed(creator1, "start")
     unten.i_want_to_be_informed(creator1, "stop")
     oben.i_want_to_be_informed(rot, "start")
@@ -52,5 +53,5 @@ if __name__ == '__main__':
     input("To quit the programm, press \"enter\"")
 
 
-    s.save_to_file()
+    creator1.statistic.save_to_file()
     pp(management.Clients)

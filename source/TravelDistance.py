@@ -5,17 +5,20 @@ from programm import *
 import threading
 import jsonpickle
 import paho.mqtt.client as mqtt
+from Statistik import *
 
 
 
 class TravelDistance:
-    def __init__(self, distance:int, management: Management, timeout: float):
+    def __init__(self, distance:int, management: Management, do_statistic: bool, timeout: float):
         self.name = "Hans"
         self.entry_list = []
         self.timer_list = []
         self.distance = distance
         self.management = management
         self.timeout = timeout
+        self.statistic = Statistik()
+        self.do_statistic = do_statistic
 
 
     def start(self,time:float):
@@ -38,20 +41,25 @@ class TravelDistance:
             self.timer_list.remove(timer)
             self.management.zuordnen(entry)
             self.management.speichern()
+
+            if self.do_statistic == True:
+                self.statistic.add(entry)
+
             pickle_copy = HighScoreEntry(None, None)
             pickle_copy.name = entry.name
             pickle_copy.distance = entry.distance / 1000
             pickle_copy.speed = format(entry.speed, ".2f")
             pickle_copy.duration = format(entry.duration, ".3f")
             entry_encode = jsonpickle.encode(pickle_copy)
+            highscores = jsonpickle.encode(self.management.Clients[0])
             client = mqtt.Client()
             client.connect("localhost", 1883, 60)
+            client.publish("newHighscore", highscores)
             client.publish("newSpeed", entry_encode)
+
             client.disconnect()
         except:
             print("ERROR: Messung wurde noch nicht gestartet")
-
-
 
 
     def _on_timeout(self):

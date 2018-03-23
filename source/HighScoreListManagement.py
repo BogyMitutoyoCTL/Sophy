@@ -15,9 +15,13 @@ class Management:
         for liste in self.Clients:
             liste.add(eintrag)
 
-    def speichern(self, ):
-        for liste in self.Clients:
-            HighScoreSave().save(liste)
+    def speichern(self):
 
+        HighScoreSave().save(self.Clients)
 
-
+    def laden(self) -> bool:
+        try:
+            self.Clients = HighScoreSave().load()
+            return True
+        except:
+            return False
