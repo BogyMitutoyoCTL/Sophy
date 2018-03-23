@@ -70,7 +70,7 @@ http://127.0.0.1:1880
 
 Go to the Node-RED Site and import a flow from the clipboard.
 
-```
+```json
 [
     {
         "id": "ca0de6c2.93ef68",
