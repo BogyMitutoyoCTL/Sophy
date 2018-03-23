@@ -258,7 +258,7 @@ chmod +x ./demo_mqtt_publish.py
         "wires": [
             [
                 "c9edfb8f.0fdfa8",
-                "257e5d8e.fa2832"
+                "9ea6a885.9073c8"
             ]
         ]
     },
@@ -271,28 +271,28 @@ chmod +x ./demo_mqtt_publish.py
         "order": 0,
         "width": "0",
         "height": "0",
-        "format": "<div id=\"data\">\n    <div id=\"duration\"><span class=\"text\">Duration:</span> <span class=\"value\">{{msg.payload.duration}}s</span></div>\n    <div id=\"average_speed\"><span class=\"text\">Average Speed:</span> <span class=\"value\">{{msg.payload.speed}}km/h</span></div>\n    <div id=\"distance\"><span id=\"text\">Distance:</span> <span id=\"value\">{{msg.payload.distance}}m</span></div>\n</div>",
+        "format": "<style>{{msg.style}}</style>\n<div id=\"data\">\n    <div id=\"duration\"><span class=\"text\">Duration:</span> <span class=\"value\">{{msg.payload.duration}}s</span></div>\n    <div id=\"average_speed\"><span class=\"text\">Average Speed:</span> <span class=\"value\">{{msg.payload.speed}}km/h</span></div>\n    <div id=\"distance\"><span id=\"text\">Distance:</span> <span id=\"value\">{{msg.payload.distance}}m</span></div>\n</div>",
         "storeOutMessages": false,
         "fwdInMessages": true,
         "templateScope": "local",
-        "x": 707,
-        "y": 787,
+        "x": 818,
+        "y": 767,
         "wires": [
             []
         ]
     },
     {
-        "id": "257e5d8e.fa2832",
+        "id": "9ea6a885.9073c8",
         "type": "template",
         "z": "4f594ac7.c0c694",
         "name": "css",
         "field": "style",
         "fieldType": "msg",
-        "format": "css",
-        "syntax": "plain",
+        "format": "html",
+        "syntax": "mustache",
         "template": "#data {\n    position:fixed;\n    top: 50%;\n    left: 50%;\n    width:30em;\n    height:18em;\n    margin-top: -9em; /*set to a negative number 1/2 of your height*/\n    margin-left: -15em; /*set to a negative number 1/2 of your width*/\n    border: 3px solid #ccc;\n    background-color: yellow;\n}\n\n#duration {\n    text-color: black\n    text-size: 42px\n}\n\n#average_speed {\n    text-color: black\n    text-size: 42px\n}\n\n#distance {\n    text-color: black\n    text-size: 42px\n}",
-        "x": 529,
-        "y": 825,
+        "x": 646,
+        "y": 775,
         "wires": [
             [
                 "7a18cc2b.7837c4"
@@ -309,8 +309,8 @@ chmod +x ./demo_mqtt_publish.py
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 736,
-        "y": 646,
+        "x": 793,
+        "y": 622,
         "wires": []
     },
     {
