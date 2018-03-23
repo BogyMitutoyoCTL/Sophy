@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 
+GPIO.setmode(GPIO.BCM)
 
 class Signal:
     def __init__(self,GPIO_PIN):

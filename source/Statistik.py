@@ -8,7 +8,7 @@ class Statistik:
         self.entries = []
         pass
 
-    def save_entry(self, entry: HighScoreEntry):
+    def add(self, entry: HighScoreEntry):
         self.entries.append(entry)
 
     def save_to_file(self):
