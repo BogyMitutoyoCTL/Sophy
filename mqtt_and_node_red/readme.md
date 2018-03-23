@@ -225,3 +225,130 @@ chmod +x ./demo_mqtt_publish.py
     text-size: 42px
 }
 ```
+### Flow in Node-RED to display speeds...
+
+```
+[
+    {
+        "id": "ca0de6c2.93ef68",
+        "type": "mqtt in",
+        "z": "4f594ac7.c0c694",
+        "name": "new Speed Message",
+        "topic": "newSpeed",
+        "qos": "2",
+        "broker": "f56708d.defa2f8",
+        "x": 106,
+        "y": 706,
+        "wires": [
+            [
+                "680a3aa6.e2f884"
+            ]
+        ]
+    },
+    {
+        "id": "680a3aa6.e2f884",
+        "type": "json",
+        "z": "4f594ac7.c0c694",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 420,
+        "y": 779,
+        "wires": [
+            [
+                "c9edfb8f.0fdfa8",
+                "257e5d8e.fa2832"
+            ]
+        ]
+    },
+    {
+        "id": "7a18cc2b.7837c4",
+        "type": "ui_template",
+        "z": "4f594ac7.c0c694",
+        "group": "d5d137e.fa291c8",
+        "name": "JSON",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "format": "<div id=\"data\">\n    <div id=\"duration\"><span class=\"text\">Duration:</span> <span class=\"value\">{{msg.payload.duration}}s</span></div>\n    <div id=\"average_speed\"><span class=\"text\">Average Speed:</span> <span class=\"value\">{{msg.payload.speed}}km/h</span></div>\n    <div id=\"distance\"><span id=\"text\">Distance:</span> <span id=\"value\">{{msg.payload.distance}}m</span></div>\n</div>",
+        "storeOutMessages": false,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 707,
+        "y": 787,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "257e5d8e.fa2832",
+        "type": "template",
+        "z": "4f594ac7.c0c694",
+        "name": "css",
+        "field": "style",
+        "fieldType": "msg",
+        "format": "css",
+        "syntax": "plain",
+        "template": "#data {\n    position:fixed;\n    top: 50%;\n    left: 50%;\n    width:30em;\n    height:18em;\n    margin-top: -9em; /*set to a negative number 1/2 of your height*/\n    margin-left: -15em; /*set to a negative number 1/2 of your width*/\n    border: 3px solid #ccc;\n    background-color: yellow;\n}\n\n#duration {\n    text-color: black\n    text-size: 42px\n}\n\n#average_speed {\n    text-color: black\n    text-size: 42px\n}\n\n#distance {\n    text-color: black\n    text-size: 42px\n}",
+        "x": 529,
+        "y": 825,
+        "wires": [
+            [
+                "7a18cc2b.7837c4"
+            ]
+        ]
+    },
+    {
+        "id": "c9edfb8f.0fdfa8",
+        "type": "debug",
+        "z": "4f594ac7.c0c694",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 736,
+        "y": 646,
+        "wires": []
+    },
+    {
+        "id": "f56708d.defa2f8",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "MQTT Broker",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": ""
+    },
+    {
+        "id": "d5d137e.fa291c8",
+        "type": "ui_group",
+        "z": "",
+        "name": "Tabelle",
+        "tab": "6c59aefb.2d2a1",
+        "disp": false,
+        "width": "17",
+        "collapse": false
+    },
+    {
+        "id": "6c59aefb.2d2a1",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Speeds",
+        "icon": "dashboard",
+        "order": 3
+    }
+]
+```
