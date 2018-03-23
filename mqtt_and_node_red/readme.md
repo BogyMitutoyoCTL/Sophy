@@ -185,3 +185,12 @@ chmod +x ./demo_mqtt_publish.py
 ./demo_mqtt_publish.py 
 ```
 
+### HTML to display new speed
+
+```html
+<div id="data">
+    <div id="duration"><span class="text">Duration:</span> <span class="value">3.15155ms</span></div>
+    <div id="average_speed"><span class="text">Average Speed:</span> <span class="value">0.24555ms</span></div>
+    <div id="distance"><span id="text">Distance:</span> <span id="value">120m</span></div>
+</div>
+```
