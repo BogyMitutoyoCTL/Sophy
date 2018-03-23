@@ -34,7 +34,6 @@ class HighScoreEntry:
     def start(self,time:float):
         self.start_time = time
 
-
     def stop(self,time:float):
         self.stop_time = time
         self.record_date = date.fromtimestamp(self.stop_time)

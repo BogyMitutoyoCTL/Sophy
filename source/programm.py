@@ -1,3 +1,4 @@
+
 from tkinter import simpledialog as sdl
 import LightBarrier
 from TravelDistance import *
@@ -27,6 +28,8 @@ if __name__ == '__main__':
     oben = LightBarrier.LightBarrier(4)
     mitte = LightBarrier.LightBarrier(17)
     unten = LightBarrier.LightBarrier(27)
+
+
     rot = Signal(22)
     gruen = Signal(10)
     gelb = Signal(9)
