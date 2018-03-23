@@ -189,8 +189,39 @@ chmod +x ./demo_mqtt_publish.py
 
 ```html
 <div id="data">
-    <div id="duration"><span class="text">Duration:</span> <span class="value">3.15155ms</span></div>
-    <div id="average_speed"><span class="text">Average Speed:</span> <span class="value">0.24555ms</span></div>
+    <div id="duration"><span class="text">Duration:</span> <span class="value">3.15155s</span></div>
+    <div id="average_speed"><span class="text">Average Speed:</span> <span class="value">0.24555km/h</span></div>
     <div id="distance"><span id="text">Distance:</span> <span id="value">120m</span></div>
 </div>
+```
+
+### CSS to display in new speed
+
+```css
+#data {
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    width:30em;
+    height:18em;
+    margin-top: -9em; /*set to a negative number 1/2 of your height*/
+    margin-left: -15em; /*set to a negative number 1/2 of your width*/
+    border: 3px solid #ccc;
+    background-color: yellow;
+}
+
+#duration {
+    text-color: black
+    text-size: 42px
+}
+
+#average_speed {
+    text-color: black
+    text-size: 42px
+}
+
+#distance {
+    text-color: black
+    text-size: 42px
+}
 ```
