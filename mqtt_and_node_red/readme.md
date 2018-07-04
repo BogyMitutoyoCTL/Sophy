@@ -68,7 +68,7 @@ http://127.0.0.1:1880
 
 ### Import the first flow
 
-Go to the Node-RED Site and import a flow from the clipboard.
+Go to the Node-RED Site and import a flow from the clipboard (Burger Menu, Import, Clipboard).
 
 ```json
 [
@@ -226,6 +226,8 @@ chmod +x ./demo_mqtt_publish.py
 }
 ```
 ### Flow in Node-RED to display speeds and highscore list...
+
+Before importing this flow, install the UI nodes (Burger Menu, Manage Palette, Palette, Install, node-red-dashboard)
 
 ```json
 [
