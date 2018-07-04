@@ -186,6 +186,7 @@ and go...
 chmod +x ./demo_mqtt_publish.py
 ./demo_mqtt_publish.py 
 ```
+"Hello World" should appear again in the debug window....
 
 ### HTML to display new speed
 
