@@ -156,6 +156,8 @@ mosquitto_pub -h localhost -t test -m '{"string":"Hello World!"}'
 ```
 Verify if the message is displayed in Node-RED "Debug" window...
 
+![image](https://user-images.githubusercontent.com/3775529/42264861-2bec56f6-7f72-11e8-99b6-622e60828bae.png)
+
 ### Testprogram to send data with python
 
 we use an editor to write the first python mqtt sender...
