@@ -68,7 +68,7 @@ http://127.0.0.1:1880
 
 ### Import the first flow
 
-Go to the Node-RED Site and import a flow from the clipboard.
+Go to the Node-RED Site and import a flow from the clipboard (Burger Menu, Import, Clipboard).
 
 ```json
 [
@@ -156,6 +156,8 @@ mosquitto_pub -h localhost -t test -m '{"string":"Hello World!"}'
 ```
 Verify if the message is displayed in Node-RED "Debug" window...
 
+![image](https://user-images.githubusercontent.com/3775529/42264861-2bec56f6-7f72-11e8-99b6-622e60828bae.png)
+
 ### Testprogram to send data with python
 
 we use an editor to write the first python mqtt sender...
@@ -184,14 +186,16 @@ and go...
 chmod +x ./demo_mqtt_publish.py
 ./demo_mqtt_publish.py 
 ```
+"Hello World" should appear again in the debug window....
 
 ### HTML to display new speed
 
 ```html
+<style>{{msg.style}}</style>
 <div id="data">
-    <div id="duration"><span class="text">Duration:</span> <span class="value">3.15155s</span></div>
-    <div id="average_speed"><span class="text">Average Speed:</span> <span class="value">0.24555km/h</span></div>
-    <div id="distance"><span id="text">Distance:</span> <span id="value">120m</span></div>
+    <div id="duration"><span class="text">Duration:</span> <span class="value">{{msg.payload.duration}} sec</span></div>
+    <div id="average_speed"><span class="text">Average Speed:</span> <span class="value">{{msg.payload.speed}} m/sec</span></div>
+    <div id="distance"><span class="text">Distance:</span> <span class="value">{{msg.payload.distance}} m</span></div>
 </div>
 ```
 
@@ -202,50 +206,56 @@ chmod +x ./demo_mqtt_publish.py
     position:fixed;
     top: 50%;
     left: 50%;
-    width:30em;
-    height:18em;
+    width:50em;
     margin-top: -9em; /*set to a negative number 1/2 of your height*/
     margin-left: -15em; /*set to a negative number 1/2 of your width*/
     border: 3px solid #ccc;
-    background-color: yellow;
+    background-color: lightgrey;
 }
 
 #duration {
-    text-color: black
-    text-size: 42px
+    background-color:yellow;
 }
 
 #average_speed {
-    text-color: black
-    text-size: 42px
+    background-color:aquamarine;
 }
 
 #distance {
-    text-color: black
-    text-size: 42px
+    background-color:yellow;
+}
+
+.text {
+    font-size:44px;
+}
+
+.value {
+    font-size:44px;
 }
 ```
 ### Flow in Node-RED to display speeds and highscore list...
 
+Before importing this flow, install the UI nodes (Burger Menu, Manage Palette, Palette, Install, node-red-dashboard)
+
 ```json
 [
     {
-        "id": "4f594ac7.c0c694",
+        "id": "ea3fc4f2.ca0968",
         "type": "tab",
         "label": "Aquasol",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "a9082fa1.80b2b",
+        "id": "305f3645.e6b6fa",
         "type": "ui_template",
-        "z": "4f594ac7.c0c694",
-        "group": "e013fb5.b351a08",
+        "z": "ea3fc4f2.ca0968",
+        "group": "87cd78ea.8a4c68",
         "name": "Highscore",
         "order": 0,
         "width": "0",
         "height": "0",
-        "format": "<style>{{msg.style}}</style>\n<h2>Highscorelist</h2>\n<table>\n<tbody>\n<tr>\n<td><span class=\"title\">Name</span></td>\n<td><span class=\"title\">Duration</span></td>\n<td><span class=\"title\">Average Speed</span></td>\n<td><span class=\"title\">Distance</span></td>\n</tr>\n<tr ng-repeat=\"obj in msg.payload.list\">\n<td><span class=\"value\">{{obj.name}}</span></td>\n<td><span class=\"value\">{{obj.duration}}s</span></td>\n<td><span class=\"value\">{{obj.speed}}km/h</span></td>\n<td><span class=\"value\">{{obj.distance}}m</span></td>\n</tr>\n</tbody>\n</table>\n",
+        "format": "<style>{{msg.style}}</style>\n<h1>Highscorelist</h1>\n<table>\n<tbody>\n<tr>\n<td><span class=\"title\">Rank</span></td>\n<td><span class=\"title\">Name</span></td>\n<td><span class=\"title\">Duration</span></td>\n<td><span class=\"title\">Average Speed</span></td>\n<td><span class=\"title\">Distance</span></td>\n</tr>\n<tr ng-repeat=\"obj in msg.payload.list\">\n<td><span class=\"value\">{{obj.rank}}</span></td>\n<td><span class=\"value\">{{obj.name}}</span></td>\n<td><span class=\"value\">{{obj.duration}} sec</span></td>\n<td><span class=\"value\">{{obj.speed}} m/sec</span></td>\n<td><span class=\"value\">{{obj.distance}} m</span></td>\n</tr>\n</tbody>\n</table>\n",
         "storeOutMessages": false,
         "fwdInMessages": true,
         "templateScope": "local",
@@ -256,27 +266,27 @@ chmod +x ./demo_mqtt_publish.py
         ]
     },
     {
-        "id": "9a11f024.fb3ff",
+        "id": "34b503a5.889eac",
         "type": "template",
-        "z": "4f594ac7.c0c694",
+        "z": "ea3fc4f2.ca0968",
         "name": "css",
         "field": "style",
         "fieldType": "msg",
         "format": "html",
         "syntax": "mustache",
-        "template": "table {\n    color: #333;\n    font-family: Helvetica, Arial, sans-serif;\n    width: 100%;\n    border-collapse: collapse;\n    border-spacing: 0;\n}\nh1 {\n    color: #333;\n    font-family: Helvetica, Arial, sans-serif;\n}\ntd, th {\n    border: 1px solid transparent;\n    /* No more visible border */\n    height: 30px;\n    transition: all 0.3s;\n    /* Simple transition for hover effect */\n}\nth {\n    background: #DFDFDF;\n    /* Darken header a bit */\n    font-weight: bold;\n}\ntd {\n    background: #FAFAFA;\n    text-align: center;\n}\n\n/* Cells in even rows (2,4,6...) are one color */\n\ndiv:nth-child(even) td {\n    background: #F1F1F1;\n}\n\n/* Cells in odd rows (1,3,5...) are another (excludes header cells)  */\n\ndiv:nth-child(odd) td {\n    background: #FEFEFE;\n}\ntr td:hover {\n    background: #666;\n    color: #FFF;\n}\n\n/* Hover cell effect! */",
-        "x": 599,
-        "y": 421,
+        "template": "table {\n    color: #333;\n    font-family: Helvetica, Arial, sans-serif;\n    font-size: 30px;\n    width: 100%;\n    border-collapse: collapse;\n    border-spacing: 0;\n}\nh1 {\n    color: #333;\n    font-family: Helvetica, Arial, sans-serif;\n}\ntd, th {\n    border: 1px solid transparent;\n    /* No more visible border */\n    height: 30px;\n    transition: all 0.3s;\n    /* Simple transition for hover effect */\n}\nth {\n    background: #DFDFDF;\n    /* Darken header a bit */\n    font-weight: bold;\n}\ntd {\n    background: #FAFAFA;\n    text-align: center;\n}\n\n/* Cells in even rows (2,4,6...) are one color */\n\ndiv:nth-child(even) td {\n    background: #F1F1F1;\n}\n\n/* Cells in odd rows (1,3,5...) are another (excludes header cells)  */\n\ndiv:nth-child(odd) td {\n    background: #FEFEFE;\n}\ntr td:hover {\n    background: #666;\n    color: #FFF;\n}\n\n/* Hover cell effect! */",
+        "x": 695,
+        "y": 476,
         "wires": [
             [
-                "a9082fa1.80b2b"
+                "305f3645.e6b6fa"
             ]
         ]
     },
     {
-        "id": "195dda7.0d42f26",
+        "id": "4bbc408c.570a9",
         "type": "json",
-        "z": "4f594ac7.c0c694",
+        "z": "ea3fc4f2.ca0968",
         "name": "",
         "property": "payload",
         "action": "",
@@ -285,45 +295,45 @@ chmod +x ./demo_mqtt_publish.py
         "y": 396,
         "wires": [
             [
-                "4c5b604c.21f51",
-                "9a11f024.fb3ff"
+                "b6cd2a00.9b18f8",
+                "94101cff.21b65"
             ]
         ]
     },
     {
-        "id": "4c5b604c.21f51",
+        "id": "94101cff.21b65",
         "type": "debug",
-        "z": "4f594ac7.c0c694",
+        "z": "ea3fc4f2.ca0968",
         "name": "",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
-        "x": 604,
-        "y": 551,
+        "complete": "payload",
+        "x": 658,
+        "y": 419,
         "wires": []
     },
     {
-        "id": "ca0de6c2.93ef68",
+        "id": "6c9da5d4.a1605c",
         "type": "mqtt in",
-        "z": "4f594ac7.c0c694",
+        "z": "ea3fc4f2.ca0968",
         "name": "new Speed Message",
         "topic": "newSpeed",
         "qos": "2",
-        "broker": "f56708d.defa2f8",
+        "broker": "8148060c.347b58",
         "x": 206,
         "y": 120,
         "wires": [
             [
-                "680a3aa6.e2f884"
+                "75f8b147.eb03e"
             ]
         ]
     },
     {
-        "id": "680a3aa6.e2f884",
+        "id": "75f8b147.eb03e",
         "type": "json",
-        "z": "4f594ac7.c0c694",
+        "z": "ea3fc4f2.ca0968",
         "name": "",
         "property": "payload",
         "action": "",
@@ -332,16 +342,16 @@ chmod +x ./demo_mqtt_publish.py
         "y": 128,
         "wires": [
             [
-                "c9edfb8f.0fdfa8",
-                "9ea6a885.9073c8",
-                "6852096a.7dc838"
+                "8e1f8b0e.6cca18",
+                "d6a59694.1eb128",
+                "bacf627c.d9378"
             ]
         ]
     },
     {
-        "id": "c9edfb8f.0fdfa8",
+        "id": "8e1f8b0e.6cca18",
         "type": "debug",
-        "z": "4f594ac7.c0c694",
+        "z": "ea3fc4f2.ca0968",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -353,9 +363,9 @@ chmod +x ./demo_mqtt_publish.py
         "wires": []
     },
     {
-        "id": "e1ffa5f9.7c4d98",
+        "id": "3e66cb6f.ab1814",
         "type": "ui_toast",
-        "z": "4f594ac7.c0c694",
+        "z": "ea3fc4f2.ca0968",
         "position": "top left",
         "displayTime": "1",
         "highlight": "",
@@ -369,15 +379,15 @@ chmod +x ./demo_mqtt_publish.py
         "wires": []
     },
     {
-        "id": "7a18cc2b.7837c4",
+        "id": "f7d55276.8c506",
         "type": "ui_template",
-        "z": "4f594ac7.c0c694",
-        "group": "d5d137e.fa291c8",
+        "z": "ea3fc4f2.ca0968",
+        "group": "7e2298f1.493228",
         "name": "Speed",
         "order": 0,
         "width": "0",
         "height": "0",
-        "format": "<style>{{msg.style}}</style>\n<div id=\"data\">\n    <div id=\"duration\"><span class=\"text\">Duration:</span> <span class=\"value\">{{msg.payload.duration}}s</span></div>\n    <div id=\"average_speed\"><span class=\"text\">Average Speed:</span> <span class=\"value\">{{msg.payload.speed}}km/h</span></div>\n    <div id=\"distance\"><span class=\"text\">Distance:</span> <span class=\"value\">{{msg.payload.distance}}m</span></div>\n</div>",
+        "format": "<style>{{msg.style}}</style>\n<div id=\"data\">\n    <div id=\"duration\"><span class=\"text\">Duration:</span> <span class=\"value\">{{msg.payload.duration}} sec</span></div>\n    <div id=\"average_speed\"><span class=\"text\">Average Speed:</span> <span class=\"value\">{{msg.payload.speed}} m/sec</span></div>\n    <div id=\"distance\"><span class=\"text\">Distance:</span> <span class=\"value\">{{msg.payload.distance}} m</span></div>\n</div>",
         "storeOutMessages": false,
         "fwdInMessages": true,
         "templateScope": "local",
@@ -388,28 +398,28 @@ chmod +x ./demo_mqtt_publish.py
         ]
     },
     {
-        "id": "9ea6a885.9073c8",
+        "id": "a57f569.40ae9a8",
         "type": "template",
-        "z": "4f594ac7.c0c694",
+        "z": "ea3fc4f2.ca0968",
         "name": "css",
         "field": "style",
         "fieldType": "msg",
         "format": "html",
         "syntax": "mustache",
-        "template": "#data {\n    position:fixed;\n    top: 50%;\n    left: 50%;\n    width:30em;\n    height:18em;\n    margin-top: -9em; /*set to a negative number 1/2 of your height*/\n    margin-left: -15em; /*set to a negative number 1/2 of your width*/\n    border: 3px solid #ccc;\n    background-color: lightgrey;\n}\n\n#duration {\n    background-color:yellow;\n}\n\n#average_speed {\n    background-color:green;\n}\n\n#distance {\n    text-color:orange;\n}\n\n.text {\n    font-size:44px;\n}\n\n.value {\n    font-size:44px;\n}",
+        "template": "#data {\n    position:fixed;\n    top: 50%;\n    left: 50%;\n    width:50em;\n    height:18em;\n    margin-top: -9em; /*set to a negative number 1/2 of your height*/\n    margin-left: -15em; /*set to a negative number 1/2 of your width*/\n    border: 3px solid #ccc;\n    background-color: lightgrey;\n}\n\n#duration {\n    background-color:yellow;\n}\n\n#average_speed {\n    background-color:aquamarine;\n}\n\n#distance {\n    text-color:orange;\n}\n\n.text {\n    font-size:44px;\n}\n\n.value {\n    font-size:44px;\n}",
         "x": 682,
         "y": 118,
         "wires": [
             [
-                "7a18cc2b.7837c4",
-                "b3e9c0f9.8a33f"
+                "f7d55276.8c506",
+                "f658d5bf.481458"
             ]
         ]
     },
     {
-        "id": "b3e9c0f9.8a33f",
+        "id": "f658d5bf.481458",
         "type": "function",
-        "z": "4f594ac7.c0c694",
+        "z": "ea3fc4f2.ca0968",
         "name": "New Values",
         "func": "msg.payload = \"New Values...\"\nreturn msg;",
         "outputs": 1,
@@ -418,14 +428,14 @@ chmod +x ./demo_mqtt_publish.py
         "y": 219,
         "wires": [
             [
-                "e1ffa5f9.7c4d98"
+                "3e66cb6f.ab1814"
             ]
         ]
     },
     {
-        "id": "501194f7.5df3ac",
+        "id": "e06a7a01.9969c8",
         "type": "inject",
-        "z": "4f594ac7.c0c694",
+        "z": "ea3fc4f2.ca0968",
         "name": "",
         "topic": "",
         "payload": "",
@@ -438,14 +448,14 @@ chmod +x ./demo_mqtt_publish.py
         "y": 214,
         "wires": [
             [
-                "4f0e13b9.27201c"
+                "31b0e3ec.d6b5ec"
             ]
         ]
     },
     {
-        "id": "4f0e13b9.27201c",
+        "id": "31b0e3ec.d6b5ec",
         "type": "function",
-        "z": "4f594ac7.c0c694",
+        "z": "ea3fc4f2.ca0968",
         "name": "Random",
         "func": "duration = (Math.random() * 10.0).toPrecision(3)\nspeed = (Math.random() * 1.0).toPrecision(3)\ndistance = (Math.random() * 20.0).toPrecision(2)\nmsg.payload = '{\"duration\": ' + duration + ', \"speed\": ' + speed + ', \"distance\": ' + distance + '}'\nreturn msg;",
         "outputs": 1,
@@ -454,14 +464,14 @@ chmod +x ./demo_mqtt_publish.py
         "y": 261,
         "wires": [
             [
-                "680a3aa6.e2f884"
+                "75f8b147.eb03e"
             ]
         ]
     },
     {
-        "id": "c4c6c4cb.a9e7f8",
+        "id": "a0484699.b57aa8",
         "type": "inject",
-        "z": "4f594ac7.c0c694",
+        "z": "ea3fc4f2.ca0968",
         "name": "Highscore",
         "topic": "",
         "payload": "",
@@ -474,14 +484,14 @@ chmod +x ./demo_mqtt_publish.py
         "y": 556,
         "wires": [
             [
-                "c310f1fa.25245"
+                "8ffd1135.bec8d"
             ]
         ]
     },
     {
-        "id": "43c61600.429dbc",
+        "id": "44fed1da.5c8e",
         "type": "ui_ui_control",
-        "z": "4f594ac7.c0c694",
+        "z": "ea3fc4f2.ca0968",
         "name": "Switch",
         "x": 772,
         "y": 278,
@@ -490,9 +500,9 @@ chmod +x ./demo_mqtt_publish.py
         ]
     },
     {
-        "id": "6852096a.7dc838",
+        "id": "d6a59694.1eb128",
         "type": "function",
-        "z": "4f594ac7.c0c694",
+        "z": "ea3fc4f2.ca0968",
         "name": "to Tab Speeds",
         "func": "msg.payload = 'Speeds'\nreturn msg;",
         "outputs": 1,
@@ -501,18 +511,18 @@ chmod +x ./demo_mqtt_publish.py
         "y": 270,
         "wires": [
             [
-                "43c61600.429dbc",
-                "518ea2cd.963afc"
+                "44fed1da.5c8e",
+                "9fe88e11.78aa2"
             ]
         ]
     },
     {
-        "id": "518ea2cd.963afc",
+        "id": "9fe88e11.78aa2",
         "type": "delay",
-        "z": "4f594ac7.c0c694",
+        "z": "ea3fc4f2.ca0968",
         "name": "",
         "pauseType": "delay",
-        "timeout": "3",
+        "timeout": "5",
         "timeoutUnits": "seconds",
         "rate": "1",
         "nbRateUnits": "1",
@@ -525,14 +535,14 @@ chmod +x ./demo_mqtt_publish.py
         "y": 349,
         "wires": [
             [
-                "7afd7d03.b16d24"
+                "b3944292.5b09d"
             ]
         ]
     },
     {
-        "id": "8961db6a.777f88",
+        "id": "ecf6243a.f1c3d8",
         "type": "ui_ui_control",
-        "z": "4f594ac7.c0c694",
+        "z": "ea3fc4f2.ca0968",
         "name": "Switch",
         "x": 842,
         "y": 394,
@@ -541,9 +551,9 @@ chmod +x ./demo_mqtt_publish.py
         ]
     },
     {
-        "id": "7afd7d03.b16d24",
+        "id": "b3944292.5b09d",
         "type": "function",
-        "z": "4f594ac7.c0c694",
+        "z": "ea3fc4f2.ca0968",
         "name": "to Tab Highscore",
         "func": "msg.payload = 'Highscore'\nreturn msg;",
         "outputs": 1,
@@ -552,54 +562,103 @@ chmod +x ./demo_mqtt_publish.py
         "y": 345,
         "wires": [
             [
-                "8961db6a.777f88"
+                "ecf6243a.f1c3d8"
             ]
         ]
     },
     {
-        "id": "312580a5.b27db",
+        "id": "3422f4b8.11de0c",
         "type": "mqtt in",
-        "z": "4f594ac7.c0c694",
+        "z": "ea3fc4f2.ca0968",
         "name": "new Highscore Message",
         "topic": "newHighscore",
         "qos": "2",
-        "broker": "f56708d.defa2f8",
+        "broker": "8148060c.347b58",
         "x": 197,
         "y": 328,
         "wires": [
             [
-                "195dda7.0d42f26"
+                "4bbc408c.570a9"
             ]
         ]
     },
     {
-        "id": "c310f1fa.25245",
+        "id": "8ffd1135.bec8d",
         "type": "function",
-        "z": "4f594ac7.c0c694",
+        "z": "ea3fc4f2.ca0968",
         "name": "Fixed Highscore",
-        "func": "var name1 = \"James Brown\"\nmsg.payload = '{\"list\": [{\"start_time\": 1521816916.2528725, \"py/object\": \"HighScoreEntry.HighScoreEntry\", \"duration\": 0.19170522689819336, \"speed\": 37.557661397639514, \"stop_time\": 1521816916.4445777, \"distance\": 2000, \"name\": \"' + name1 + '\", \"record_date\": {\"py/object\": \"datetime.date\", \"__reduce__\": [{\"py/type\": \"datetime.date\"}, [\"B+IDFw==\"]]}}, {\"start_time\": 1521816918.4935858, \"py/object\": \"HighScoreEntry.HighScoreEntry\", \"duration\": 0.21306467056274414, \"speed\": 33.792556884177166, \"stop_time\": 1521816918.7066505, \"distance\": 2000, \"name\": \"Hans\", \"record_date\": {\"py/object\": \"datetime.date\", \"__reduce__\": [{\"py/type\": \"datetime.date\"}, [\"B+IDFw==\"]]}}, {\"start_time\": 1521816656.9219244, \"py/object\": \"HighScoreEntry.HighScoreEntry\", \"duration\": 0.335817813873291, \"speed\": 21.440196745240755, \"stop_time\": 1521816657.2577422, \"distance\": 2000, \"name\": \"Hans\", \"record_date\": {\"py/object\": \"datetime.date\", \"__reduce__\": [{\"py/type\": \"datetime.date\"}, [\"B+IDFw==\"]]}}], \"py/object\": \"HighScoreList.HighScoreList\", \"max_age\": {\"py/reduce\": [{\"py/type\": \"datetime.timedelta\"}, {\"py/tuple\": [1, 0, 0]}, null, null, null]}, \"max_count\": 3}';\nreturn msg;",
+        "func": "var name1 = \"Herbert Brown\";\nmsg.payload = '{\"list\": [{\"start_time\": 1521816916.2528725, \"py/object\": \"HighScoreEntry.HighScoreEntry\", \"duration\": 0.19170522689819336, \"speed\": 37.557661397639514, \"stop_time\": 1521816916.4445777, \"distance\": 2000, \"name\": \"' + name1 + '\", \"record_date\": {\"py/object\": \"datetime.date\", \"__reduce__\": [{\"py/type\": \"datetime.date\"}, [\"B+IDFw==\"]]}}, {\"start_time\": 1521816918.4935858, \"py/object\": \"HighScoreEntry.HighScoreEntry\", \"duration\": 0.21306467056274414, \"speed\": 33.792556884177166, \"stop_time\": 1521816918.7066505, \"distance\": 2000, \"name\": \"Hans\", \"record_date\": {\"py/object\": \"datetime.date\", \"__reduce__\": [{\"py/type\": \"datetime.date\"}, [\"B+IDFw==\"]]}}, {\"start_time\": 1521816656.9219244, \"py/object\": \"HighScoreEntry.HighScoreEntry\", \"duration\": 0.335817813873291, \"speed\": 21.440196745240755, \"stop_time\": 1521816657.2577422, \"distance\": 2000, \"name\": \"Hans\", \"record_date\": {\"py/object\": \"datetime.date\", \"__reduce__\": [{\"py/type\": \"datetime.date\"}, [\"B+IDFw==\"]]}}], \"py/object\": \"HighScoreList.HighScoreList\", \"max_age\": {\"py/reduce\": [{\"py/type\": \"datetime.timedelta\"}, {\"py/tuple\": [1, 0, 0]}, null, null, null]}, \"max_count\": 3}';\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 264,
         "y": 464,
         "wires": [
             [
-                "195dda7.0d42f26"
+                "4bbc408c.570a9"
             ]
         ]
     },
     {
-        "id": "e013fb5.b351a08",
+        "id": "b6cd2a00.9b18f8",
+        "type": "function",
+        "z": "ea3fc4f2.ca0968",
+        "name": "formatData",
+        "func": "var data = msg.payload; \nfor (i = 0; i < msg.payload.list.length; i++) \n{ \n    msg.payload.list[i].rank = i+1;\n    msg.payload.list[i].duration = msg.payload.list[i].duration.toFixed(4);\n    msg.payload.list[i].speed = msg.payload.list[i].speed.toFixed(5);\n    msg.payload.list[i].distance = msg.payload.list[i].distance.toFixed(4);\n}\nvar newMsg = {payload: data };\nreturn [ msg, newMsg ];\n",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 487,
+        "y": 624,
+        "wires": [
+            [
+                "34b503a5.889eac"
+            ],
+            [
+                "f87050c0.c0e08"
+            ]
+        ]
+    },
+    {
+        "id": "f87050c0.c0e08",
+        "type": "debug",
+        "z": "ea3fc4f2.ca0968",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 704,
+        "y": 777,
+        "wires": []
+    },
+    {
+        "id": "bacf627c.d9378",
+        "type": "function",
+        "z": "ea3fc4f2.ca0968",
+        "name": "formatData",
+        "func": "msg.payload.duration = msg.payload.duration.toFixed(4);\nmsg.payload.speed = msg.payload.speed.toFixed(5);\nmsg.payload.distance = msg.payload.distance.toFixed(4);\nreturn msg\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 586,
+        "y": 174,
+        "wires": [
+            [
+                "a57f569.40ae9a8"
+            ]
+        ]
+    },
+    {
+        "id": "87cd78ea.8a4c68",
         "type": "ui_group",
-        "z": "4f594ac7.c0c694",
+        "z": "ea3fc4f2.ca0968",
         "name": "Highscore",
-        "tab": "9cb6dd64.64118",
+        "tab": "fc406816.5a7808",
         "disp": false,
-        "width": "3",
+        "width": "17",
         "collapse": false
     },
     {
-        "id": "f56708d.defa2f8",
+        "id": "8148060c.347b58",
         "type": "mqtt-broker",
         "z": "",
         "name": "MQTT Broker",
@@ -610,25 +669,25 @@ chmod +x ./demo_mqtt_publish.py
         "compatmode": true,
         "keepalive": "60",
         "cleansession": true,
-        "willTopic": "",
-        "willQos": "0",
-        "willPayload": "",
         "birthTopic": "",
         "birthQos": "0",
-        "birthPayload": ""
+        "birthPayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
     },
     {
-        "id": "d5d137e.fa291c8",
+        "id": "7e2298f1.493228",
         "type": "ui_group",
         "z": "",
         "name": "Tabelle",
-        "tab": "6c59aefb.2d2a1",
+        "tab": "cdc262a2.5bd2b",
         "disp": false,
         "width": "17",
         "collapse": false
     },
     {
-        "id": "9cb6dd64.64118",
+        "id": "fc406816.5a7808",
         "type": "ui_tab",
         "z": "",
         "name": "Highscore",
@@ -636,7 +695,7 @@ chmod +x ./demo_mqtt_publish.py
         "order": 2
     },
     {
-        "id": "6c59aefb.2d2a1",
+        "id": "cdc262a2.5bd2b",
         "type": "ui_tab",
         "z": "",
         "name": "Speeds",
