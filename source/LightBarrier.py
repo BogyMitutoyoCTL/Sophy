@@ -10,7 +10,7 @@ class LightBarrier:
         self.listener = []
         self.commands = []
         GPIO.setup(self.GPIO_PIN, GPIO.IN, pull_up_down= GPIO.PUD_DOWN)
-        GPIO.add_event_detect(self.GPIO_PIN, GPIO.RISING, callback= self.intrrupt, bouncetime=200)
+        GPIO.add_event_detect(self.GPIO_PIN, GPIO.RISING, callback= self.intrrupt, bouncetime=500)
 
     def intrrupt(self, GPIO_PIN):
         t = time.time()   #type: float

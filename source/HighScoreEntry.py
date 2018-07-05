@@ -42,7 +42,6 @@ class HighScoreEntry:
 
     def calculate_speed(self,difference):
         self.speed = self.distance / difference
-        self.speed = self.speed * 0.0036
         return self.speed
 
     def calculate_difference(self, time_start, time_stop,):

@@ -5,23 +5,25 @@ from HighScoreEntry import *
 
 class Management:
     def __init__(self,):
-        self.Clients = []
+        self.HighscoreListen = []
         pass
 
-    def manage(self, highscore: HighScoreList):
-        self.Clients.append(highscore)
+    def manage(self, liste: HighScoreList):
+        self.HighscoreListen.append(liste)
 
     def zuordnen(self, eintrag: HighScoreEntry):
-        for liste in self.Clients:
+        print(self.HighscoreListen)
+        print(len(self.HighscoreListen))
+        for liste in self.HighscoreListen:
             liste.add(eintrag)
 
     def speichern(self):
 
-        HighScoreSave().save(self.Clients)
+        HighScoreSave().save(self.HighscoreListen)
 
     def laden(self) -> bool:
         try:
-            self.Clients = HighScoreSave().load()
+            self.HighscoreListen = HighScoreSave().load()
             return True
         except:
             return False

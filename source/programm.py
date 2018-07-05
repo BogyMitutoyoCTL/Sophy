@@ -14,22 +14,21 @@ from ConsoleLogger import ConsoleLogger
 if __name__ == '__main__':
 
     management = Management()
-    Today = HighScoreList(3, timedelta(days=1))
-    Week = HighScoreList(5, timedelta(days=7))
-    Year = HighScoreList(7, timedelta(days=365))
-    Month = HighScoreList(5, timedelta(days=30))
+
 
 
     if management.laden() == False:
-
+        Today = HighScoreList(15, timedelta(days=1))
+        Week = HighScoreList(5, timedelta(days=7))
+        Year = HighScoreList(7, timedelta(days=365))
+        Month = HighScoreList(5, timedelta(days=30))
         management.manage(Today)
         management.manage(Week)
         management.manage(Month)
         management.manage(Year)
 
-    oben = LightBarrier.LightBarrier(4)
-    mitte = LightBarrier.LightBarrier(17)
-    unten = LightBarrier.LightBarrier(27)
+    oben = LightBarrier.LightBarrier(17)
+    mitte = LightBarrier.LightBarrier(4)
 
 
     rot = Signal(22)
@@ -37,14 +36,16 @@ if __name__ == '__main__':
     gelb = Signal(9)
     log1 = ConsoleLogger("Es geht")
 
-    creator1 = TravelDistance(2000, management, False,5)
+    creator1 = TravelDistance(1.305, management, False,5)
     oben.i_want_to_be_informed(creator1, "start")
-    unten.i_want_to_be_informed(creator1, "stop")
     oben.i_want_to_be_informed(rot, "start")
     oben.i_want_to_be_informed(gruen, "stop")
+    oben.i_want_to_be_informed(log1, "start")
+
+    mitte.i_want_to_be_informed(creator1, "stop")
     mitte.i_want_to_be_informed(rot, "stop")
     mitte.i_want_to_be_informed(gruen, "start")
-    mitte.i_want_to_be_informed(log1, "start")
+    mitte.i_want_to_be_informed(log1, "stop")
 
 
 
@@ -54,4 +55,4 @@ if __name__ == '__main__':
 
 
     creator1.statistic.save_to_file()
-    pp(management.Clients)
+    pp(management.HighscoreListen)
