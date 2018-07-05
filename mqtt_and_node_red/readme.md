@@ -191,10 +191,11 @@ chmod +x ./demo_mqtt_publish.py
 ### HTML to display new speed
 
 ```html
+<style>{{msg.style}}</style>
 <div id="data">
-    <div id="duration"><span class="text">Duration:</span> <span class="value">3.15155s</span></div>
-    <div id="average_speed"><span class="text">Average Speed:</span> <span class="value">0.24555km/h</span></div>
-    <div id="distance"><span id="text">Distance:</span> <span id="value">120m</span></div>
+    <div id="duration"><span class="text">Duration:</span> <span class="value">{{msg.payload.duration}} sec</span></div>
+    <div id="average_speed"><span class="text">Average Speed:</span> <span class="value">{{msg.payload.speed}} m/sec</span></div>
+    <div id="distance"><span class="text">Distance:</span> <span class="value">{{msg.payload.distance}} m</span></div>
 </div>
 ```
 
@@ -205,27 +206,31 @@ chmod +x ./demo_mqtt_publish.py
     position:fixed;
     top: 50%;
     left: 50%;
-    width:30em;
-    height:18em;
+    width:50em;
     margin-top: -9em; /*set to a negative number 1/2 of your height*/
     margin-left: -15em; /*set to a negative number 1/2 of your width*/
     border: 3px solid #ccc;
-    background-color: yellow;
+    background-color: lightgrey;
 }
 
 #duration {
-    text-color: black
-    text-size: 42px
+    background-color:yellow;
 }
 
 #average_speed {
-    text-color: black
-    text-size: 42px
+    background-color:aquamarine;
 }
 
 #distance {
-    text-color: black
-    text-size: 42px
+    background-color:yellow;
+}
+
+.text {
+    font-size:44px;
+}
+
+.value {
+    font-size:44px;
 }
 ```
 ### Flow in Node-RED to display speeds and highscore list...
